@@ -1,0 +1,44 @@
+<h2>Exercises</h2>  
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  <tr>
+    <% @list.each do |exercise| %>
+    <tr>
+      <td><%= exercise[:name] %></td>
+      <td><%= exercise[:description] %></td>
+    </tr>
+    <% end %>
+</table>
+
+<% if params[:status] == "active" %>
+  <form action="/exercises/view" method="post">
+    <p>
+      <button name="status" value="inactive">Show Inactive Exercises</button>
+      <!-- <button name="status" value="active">Show Active Exercises</button> -->
+      <button name="status" value="all">Show All Exercises</button>
+    </p>
+  </form>
+<% elsif params[:status] == "inactive" %>
+  <form action="/exercises/view" method="post">
+    <p>
+      <!-- <button name="status" value="inactive">Show Inactive Exercises</button> -->
+      <button name="status" value="active">Show Active Exercises</button>
+      <button name="status" value="all">Show All Exercises</button>
+    </p>
+  </form>
+<% elsif params[:status] == "all" %>
+  <form action="/exercises/view" method="post">
+    <p>
+      <button name="status" value="inactive">Show Inactive Exercises</button>
+      <button name="status" value="active">Show Active Exercises</button>
+      <!-- <button name="status" value="all">Show All Exercises</button> -->
+    </p>
+  </form>
+<% end %>
+
+<% content_for :header_links do %>
+  <a class="add" href="/exercise/new">Add Exercise</a>
+<% end %>

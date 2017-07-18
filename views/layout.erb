@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>PT Tracker</title>
+    <link rel="stylesheet" href="/stylesheets/pttracker.css">
+  </head>
+
+  <body>
+    <header> 
+      <ul id="navigation">
+        <li><a href="/">Home</a></li>
+        <li><a href="/exercises/view/active">Exercises</a></li>
+        <li><a href="/session/new">Start Session</a></li>
+        <li><a href="/reports">Reports</a></li>
+      </ul>
+      <div class="actions">
+        <%== yield_content :header_links %>
+      </div>
+    </header>
+
+    <% if session[:success] %>
+      <div class="success">
+        <p><%= session.delete(:success) %></p>
+      </div>
+    <% end %>
+
+    <% if session[:error] %>
+      <div class="error">
+        <p><%= session.delete(:error) %></p>
+      </div>
+    <% end %>
+
+    <%== yield %>
+  </body>
+
+</html>
