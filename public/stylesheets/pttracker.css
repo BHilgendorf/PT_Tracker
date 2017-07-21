@@ -13,6 +13,14 @@ th, td {
   padding: 7px 10px 10px 10px;
 }
 
+td.center-display {
+  text-align: center;
+}
+
+td.right-display {
+  text-align: right;
+}
+
 th {
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -21,11 +29,6 @@ th {
   border-top: 1px solid #999;
 }
 
-#navigation {
-  padding: 15px;
-  margin: 0px auto 0px auto;
-  text-align: center;
-}
 
 header li {
   display: inline;
@@ -39,9 +42,43 @@ a {
   padding: 6px 18px 5px 18px;
 }
 
-a:hover, a.on {
+ul li a:hover, a.on{
   color: #cc3333;
   background-color: #ffffff;
+}
+
+td a:hover, a.on{
+  color: #cc3333;
+  background-color: #ffffff;
+
+}
+
+p.inactive {
+  font-size: 100%;
+  text-align: center;
+
+}
+.button-new {
+  font-size: 110%;
+  border-radius: 4px;
+  color: white;
+  background: rgb(66, 184, 221);
+  display: inline-block;
+}
+ 
+.button-status {
+  font-size: 90%;
+  border-radius: 4px;
+  color: white;
+  background: #999;
+  display: inline-block;
+
+ }
+
+#navigation {
+  padding: 15px;
+  margin: 0px auto 0px auto;
+  text-align: center;
 }
 
 .form-exercise-new {
@@ -64,16 +101,40 @@ a:hover, a.on {
   font-weight: bold;
 }
 
-.form-exercise-new .field-long {
+.field-long {
   width: 100%;
 }
 
-.form-exercise-new .field-textarea {
-  height: 200px;
+.field-textarea {
+  height: 100px;
 }
 
 .form-exercise-new .required {
   color: red;
+}
+
+.exercise-display {
+  margin:10px;
+  max-width: 800px;
+  padding: 20px 12px 10px 20px;
+}
+
+.exercise-display li {
+  padding: 0;
+  display: block;
+  list-style: none;
+  margin: 10px 0 0 0;
+  border: 1px groove black;
+}
+
+.description {
+  padding: 0;
+  display: block;
+  list-style: none;
+  margin: 10px 0 0 0;
+  border: 1px groove black;
+  height: 120px;
+
 }
 
 .error {
@@ -81,6 +142,8 @@ a:hover, a.on {
   background: #e697ae;
   padding: 1px;
   font-weight: bold;
+  text-align: center;
+
 }
 
 .success {
@@ -88,10 +151,12 @@ a:hover, a.on {
   background: #8fd06b;
   padding: 1px;
   font-weight: bold;
+  text-align: center;
 }
 
 #session {
   padding: 5px;
   list-style: none;
-
 }
+
+

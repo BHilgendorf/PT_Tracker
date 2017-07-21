@@ -1,0 +1,16 @@
+
+<ul class="exercise-display">
+  <h4>Exercise Name</h4>
+  <li><%= @exercise[:name] %></li>
+
+  <h4>Description</h4>
+  <li class="description"><%= @exercise[:description] %></li>
+</ul>
+
+
+<h4>Stats for <%= @exercise[:name] %></h4>
+<ul>
+  <li>Completed <%= completed_count(@exercise[:id]) %> times total</li>
+</ul>
+
+

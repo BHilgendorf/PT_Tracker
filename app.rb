@@ -20,17 +20,41 @@ before do
   @storage = DatabasePersistence.new
 end
 
+helpers do
+  def completed_count(id)
+    @storage.single_exercise_completed_count(id)
+  end
+end
 
-def valid_status?(status)
+
+def valid_exercise_status?(status)
   ["active", "inactive", "all"].include?(status)
 end
 
-def valid_name?(name)
-  name.length > 0 && name.length < 255
+def invalid_exercise_name_length(name)
+  name.length <= 0 || name.length > 255
 end
 
-def valid_session?(params)
+def duplicate_exercise_name(name)
+  existing_names = @storage.exercise_names
+  existing_names.map(&:downcase).include?(name.downcase)
+end
+
+def non_empty_workout?(params)
   params.has_value?('t')
+end
+
+def completed_exercises(params)
+  list = params.keys.map(&:to_i)
+  list.delete(0)
+  list
+end
+
+def save_workout_session(params)
+  list = completed_exercises(params)
+  session_id = @storage.next_session_id
+  
+  @storage.save_workout_session(list, session_id)
 end
 
 
@@ -44,11 +68,11 @@ end
 # View list of all exercises --------------------
 get "/exercises/view/:status" do
 
-  if valid_status?(params[:status])
-    @list = @storage.exercises(params[:status])
+  if valid_exercise_status?(params[:status])
+    @list = @storage.exercise_list(params[:status])
     erb :all_exercises
   else
-    @list = @storage.exercises("active")
+    @list = @storage.exercise_list("active")
     redirect "/exercises/view/active"
   end
 end
@@ -69,29 +93,50 @@ post "/exercise/new" do
   name = params[:name]
   description = params[:description]
 
-  if valid_name?(name)
+  if invalid_exercise_name_length(name)
+    session[:error] = "Name must be between 1 and 255 characters."
+    erb :add_exercise
+  elsif duplicate_exercise_name(name)
+    session[:error] = "That exercise name is already in the system."
+    erb :add_exercise
+  else
     @storage.add_exercise(name, description)
     session[:success] = "New exercise added"
     redirect "/exercises/view/active"
-  else
-    session[:error] = "Name must be between 1 and 255 characters."
-    erb :add_exercise
   end
+end
+
+# View Single Exercise --------------------------
+get "/exercise/:id" do
+
+  @exercise = @storage.single_exercise_information(params[:id]).first
+  # completed_count = @storage.single_exercise_completed_count(params[:id])
+  # binding.pry
+  erb :single_exercise
+end
+
+# Update Single Exercise
+post "/exercise/update/:id" do
+
+  binding.pry
+
+  redirect "/exercises/view/active"
 end
 
 # Start PT Session -------------------------------
 
 get "/session/new" do
   
-  @session_list = @storage.session_exercises
+  @session_list = @storage.session_exercise_list
   erb :new_session
 end
 
 post "/session/completed" do
 
-  # session_id = @storage.next_session_id
-  if valid_session?(params)
-    session[:success] = "Session logged. Good work!"
+  if non_empty_workout?(params)
+    save_workout_session(params)
+    number_completed = completed_exercises(params).size
+    session[:success] = "Session logged. #{number_completed} exercises done. Good work!"
     redirect "/"
   else
     message = "You must check off at least 1 exercise to save a workout session."
