@@ -69,6 +69,14 @@ class DatabasePersistence
     query(sql, name, description)
   end
 
+
+  # toggle active status
+  def update_exercise(new_status, id)
+
+    sql = "UPDATE exercises SET active = $1 WHERE id = $2;"
+    query(sql, new_status, id)
+  end
+
 # Get id and name for new workout session list -------------------------
   def session_exercise_list
     sql = "SELECT id, name FROM exercises WHERE active = true ORDER BY name;"

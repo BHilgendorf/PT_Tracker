@@ -50,8 +50,8 @@ ul li a:hover, a.on{
 td a:hover, a.on{
   color: #cc3333;
   background-color: #ffffff;
-
 }
+
 
 p.inactive {
   font-size: 100%;
@@ -159,4 +159,52 @@ p.inactive {
   list-style: none;
 }
 
+/*.alter-status-active {
+  font-size: 90%;
+  border-radius: 4px;
+  color: white;
+  background: #4EA51D;
+  width: 120px ;
+  display: inline-block;
+}
+
+.alter-status-inactive {
+  font-size: 90%;
+  border-radius: 4px;
+  color: white;
+  background: #9e1818;
+  width: 120px ;
+  display: inline-block;
+}
+*/
+
+
+
+/*button.alter-status:before {
+  border: 2px solid #3f3f3f;
+  background: #ffffff url("../images/icon_check.png") 50% 50% no-repeat;
+
+}*/
+
+td button.current-status-active {
+  height: 28px;
+  width: 28px;
+  color: transparent;
+  border: 1px solid #666666;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer; 
+  background: #ffffff url("../images/icon_check.png") 50% 50% no-repeat;
+}
+
+td button.current-status-inactive {
+  height: 28px;
+  width: 28px;
+  color: transparent;
+  border: 1px solid #666666;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer; 
+  /*background: #ffffff url("../images/icon_check.png") 50% 50% no-repeat;*/
+}
 
