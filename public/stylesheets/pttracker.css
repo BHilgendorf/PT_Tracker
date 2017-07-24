@@ -72,9 +72,16 @@ p.inactive {
   color: white;
   background: #999;
   display: inline-block;
-
  }
 
+.button-status-edit {
+  font-size: 100%;
+  border-radius: 4px;
+  color: white;
+  background: rgb(66, 184, 221);
+  display: inline-block;
+
+}
 #navigation {
   padding: 15px;
   margin: 0px auto 0px auto;
@@ -159,32 +166,6 @@ p.inactive {
   list-style: none;
 }
 
-/*.alter-status-active {
-  font-size: 90%;
-  border-radius: 4px;
-  color: white;
-  background: #4EA51D;
-  width: 120px ;
-  display: inline-block;
-}
-
-.alter-status-inactive {
-  font-size: 90%;
-  border-radius: 4px;
-  color: white;
-  background: #9e1818;
-  width: 120px ;
-  display: inline-block;
-}
-*/
-
-
-
-/*button.alter-status:before {
-  border: 2px solid #3f3f3f;
-  background: #ffffff url("../images/icon_check.png") 50% 50% no-repeat;
-
-}*/
 
 td button.current-status-active {
   height: 28px;

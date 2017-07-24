@@ -26,25 +26,13 @@
 </table>
 
 <% if params[:status] == "active" %>
-  <form action="/exercises/view" method="post">
-    <p>
-      <button class="button-status" name="status" value="inactive">Show Inactive Exercises</button>
-      <button class="button-status" name="status" value="all">Show All Exercises</button>
-    </p>
-  </form>
+  <a class="button-status" href="/exercises/view/inactive">Show Inactive Exercises</a>
+  <a class="button-status" href="/exercises/view/all">Show All Exercises</a>
 <% elsif params[:status] == "inactive" %>
-  <form action="/exercises/view" method="post">
-    <p>
-      <button class="button-status" name="status" value="active">Show Active Exercises</button>
-      <button class="button-status" name="status" value="all">Show All Exercises</button>
-    </p>
-  </form>
+  <a class="button-status" href="/exercises/view/active">Show Active Exercises</a>
+  <a class="button-status" href="/exercises/view/all">Show All Exercises</a>
 <% elsif params[:status] == "all" %>
-  <form action="/exercises/view" method="post">
-    <p>
-      <button class="button-status" name="status" value="inactive">Show Inactive Exercises</button>
-      <button class="button-status" name="status" value="active">Show Active Exercises</button>
-    </p>
-  </form>
+  <a class="button-status" href="/exercises/view/active">Show Active Exercises</a>
+  <a class="button-status" href="/exercises/view/inactive">Show Inactive Exercises</a>
 <% end %>
 

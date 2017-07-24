@@ -110,13 +110,23 @@ class DatabasePersistence
     result = query(sql, id)
 
     result.map do |tuple| 
-      tuple_to_list_hash(tuple)
+      { id: tuple["id"].to_i,
+        name: tuple["name"],
+        description: tuple["description"],
+        date_added: tuple["date_added"],
+        active: tuple["active"] }
     end
   end
 
   def single_exercise_completed_count(id)
     sql = "SELECT COUNT(exercise_id) FROM exercises_completed WHERE exercise_id = $1"
     query(sql, id).values[0][0].to_i
+  end
+
+# Update exercise information ---------------------------
+  def update_exercise_name(name, id)
+    sql = "UPDATE exercises SET name = $1 WHERE id = $2"
+    query(sql, name, id)
   end
 
 

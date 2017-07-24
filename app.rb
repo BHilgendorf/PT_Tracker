@@ -1,5 +1,4 @@
 require 'sinatra'
-# require 'sinatra/content_for'
 require 'tilt/erubis'
 require 'pry'
 
@@ -26,16 +25,7 @@ helpers do
   end
 
   def sort_exercies(exercise_list)
-    list = exercise_list.sort_by { |exercise| exercise[:active] }
-    list.reverse
-  end
-
-  def button_status_name(current_status)
-    if current_status == 't'
-      'Make Inactive'
-    else
-      'Make Active'
-    end
+    exercise_list.sort_by { |exercise| exercise[:active] }.reverse
   end
 
   def button_status_class(current_status)
@@ -98,11 +88,6 @@ get '/exercises/view/:status' do
   end
 end
 
-post '/exercises/view' do
-  status = params[:status]
-  redirect "/exercises/view/#{status}"
-end
-
 # Add new exercise -----------------------------
 get '/exercise/new' do
   erb :add_exercise
@@ -126,13 +111,10 @@ post '/exercise/new' do
 end
 
 # Toggle exercises status ---------------------
-
 post '/exercise/:id/status' do
   current_status = params[:current_status]
   id = params[:id].to_i
   toggle(current_status, id)
-
-  current_status == 't' ? 'active' : 'inactive'
 
   redirect "exercises/view/#{params[:page_status]}"
 end
@@ -144,8 +126,29 @@ get '/exercise/:id' do
 end
 
 # Update Single Exercise
+
+get '/exercise/update/:id' do
+  @exercise = @storage.single_exercise_information(params[:id]).first
+  erb :edit_exercise
+end
+
 post '/exercise/update/:id' do
-  redirect '/exercises/view/active'
+  id = params[:id]
+  name = params[:name]
+  description = params[:description]
+  exercise = @storage.single_exercise_information(params[:id]).first
+
+  if invalid_exercise_name_length?(name)
+    session[:error] = 'Name must be between 1 and 255 characters.'
+    redirect "/exercise/update/#{params[:id]}"
+
+  elsif exercise[:name] != name
+    @storage.update_exercise_name(name, id)
+    redirect "/exercise/#{id}"
+  
+  end
+    redirect '/exercises/view/active'
+
 end
 
 # Start PT Session -------------------------------

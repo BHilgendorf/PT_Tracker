@@ -1,0 +1,17 @@
+<h3>Edit data for '<%= @exercise[:name] %>' </h3>
+
+<form action="/exercise/update/<%= @exercise[:id] %>" method="post">
+<ul class="form-exercise-new">
+  <li>
+    <label>Exercise Name <span class="required">*</span></label>
+    <input type="text" name="name" class="field-long" value="<%= @exercise[:name] %>" />
+  </li>
+  <li>
+    <label>Description</label>
+    <textarea name="description" class="field-long field-textarea"><%= @exercise[:description] %></textarea>
+  </li>
+  <li>
+    <input type='Submit' value="Save" />
+  </li>
+</ul>
+</form>
