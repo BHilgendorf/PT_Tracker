@@ -38,16 +38,12 @@ def valid_exercise_status?(status)
   %w(active inactive all).include?(status)
 end
 
-def invalid_exercise_name_length?(name)
-  name.length <= 0 || name.length > 255
-end
-
-def duplicate_exercise_name?(name)
-  existing_names = @storage.exercise_names
+def duplicate_exercise_name?(id, name)
+  existing_names = @storage.exercise_names(id)
   existing_names.map(&:downcase).include?(name.downcase)
 end
 
-def non_empty_workout?(params)
+def valid_workout_session?(params)
   params.value?('t')
 end
 
@@ -63,12 +59,29 @@ def save_workout_session(params)
   @storage.save_workout_session(list, session_id)
 end
 
-def toggle(current_status, id)
+def toggle_active_status(current_status, id)
   if current_status == 't'
-    @storage.update_exercise(false, id)
+    @storage.update_exercise_status(false, id)
   else
-    @storage.update_exercise(true, id)
+    @storage.update_exercise_status(true, id)
   end
+end
+
+def error_for_exercise_name(id, name)
+  if name.length <= 0 || name.length > 255
+    'Name must be between 1 and 255 characters.'
+  elsif duplicate_exercise_name?(id, name)
+    'That exercise name is already in the system.'
+  end
+end
+
+def existing_exercise_id?(id)
+  id_list = @storage.exercise_id_list
+  id_list.include?(id)
+end
+
+def delete_exercise(id)
+  @storage.delete_exercise(id)
 end
 
 # -----------------------------------------------
@@ -96,12 +109,10 @@ end
 post '/exercise/new' do
   name = params[:name]
   description = params[:description]
+  error = error_for_exercise_name(0, name)
 
-  if invalid_exercise_name_length?(name)
-    session[:error] = 'Name must be between 1 and 255 characters.'
-    erb :add_exercise
-  elsif duplicate_exercise_name?(name)
-    session[:error] = 'That exercise name is already in the system.'
+  if error
+    session[:error] = error
     erb :add_exercise
   else
     @storage.add_exercise(name, description)
@@ -114,7 +125,7 @@ end
 post '/exercise/:id/status' do
   current_status = params[:current_status]
   id = params[:id].to_i
-  toggle(current_status, id)
+  toggle_active_status(current_status, id)
 
   redirect "exercises/view/#{params[:page_status]}"
 end
@@ -125,8 +136,7 @@ get '/exercise/:id' do
   erb :single_exercise
 end
 
-# Update Single Exercise
-
+# Update Single Exercise 
 get '/exercise/update/:id' do
   @exercise = @storage.single_exercise_information(params[:id]).first
   erb :edit_exercise
@@ -136,19 +146,29 @@ post '/exercise/update/:id' do
   id = params[:id]
   name = params[:name]
   description = params[:description]
-  exercise = @storage.single_exercise_information(params[:id]).first
 
-  if invalid_exercise_name_length?(name)
-    session[:error] = 'Name must be between 1 and 255 characters.'
-    redirect "/exercise/update/#{params[:id]}"
+  error = error_for_exercise_name(id, name)
 
-  elsif exercise[:name] != name
-    @storage.update_exercise_name(name, id)
+  if error
+    session[:error] = error
+    redirect "/exercise/update/#{id}"
+  else
+    @storage.update_exercise_data(id, name, description)
     redirect "/exercise/#{id}"
-  
   end
-    redirect '/exercises/view/active'
+end
 
+# Delete Single Exercise
+post '/exercise/delete/:id' do
+  id = params[:id]
+
+  if existing_exercise_id?(id)
+    delete_exercise(id)
+  else
+    session[:error] = 'Exercise with that id does not exist'
+  end
+
+  redirect '/exercises/view/active'
 end
 
 # Start PT Session -------------------------------
@@ -159,10 +179,10 @@ get '/session/new' do
 end
 
 post '/session/completed' do
-  if non_empty_workout?(params)
+  if valid_workout_session?(params)
     save_workout_session(params)
     number_completed = completed_exercises(params).size
-    session[:success] = 'Session logged. #{number_completed} exercises done. Good work!'
+    session[:success] = "Session logged. #{number_completed} exercises done. Good work!"
     redirect '/'
   else
     message = 'You must check off at least 1 exercise to save a workout session.'

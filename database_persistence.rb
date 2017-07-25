@@ -57,10 +57,10 @@ class DatabasePersistence
   end
 
 # exercise/add------------------------------------------------------
-# checking for duplicate names when adding
-  def exercise_names
-    sql = "SELECT name FROM exercises;"
-    query(sql).field_values('name')
+# checking for duplicate names when adding or editing
+  def exercise_names(id)
+    sql = "SELECT id, name FROM exercises WHERE id != $1;"
+    query(sql, id).field_values('name')
   end
 
 # insert data for new exercise
@@ -71,7 +71,7 @@ class DatabasePersistence
 
 
   # toggle active status
-  def update_exercise(new_status, id)
+  def update_exercise_status(new_status, id)
 
     sql = "UPDATE exercises SET active = $1 WHERE id = $2;"
     query(sql, new_status, id)
@@ -123,10 +123,21 @@ class DatabasePersistence
     query(sql, id).values[0][0].to_i
   end
 
+# get list of existing exercise id's
+  def exercise_id_list
+    query("SELECT id FROM exercises;").field_values('id')
+  end
+
+# Delete single exercise
+  def delete_exercise(id)
+    sql = "DELETE FROM exercises WHERE id = $1"
+    query(sql, id)
+  end
+
 # Update exercise information ---------------------------
-  def update_exercise_name(name, id)
-    sql = "UPDATE exercises SET name = $1 WHERE id = $2"
-    query(sql, name, id)
+  def update_exercise_data(id, name, description)
+    sql = "UPDATE exercises SET name = $1, description = $2 WHERE id = $3"
+    query(sql, name, description, id )
   end
 
 

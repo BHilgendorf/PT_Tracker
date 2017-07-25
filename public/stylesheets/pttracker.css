@@ -65,7 +65,19 @@ p.inactive {
   background: rgb(66, 184, 221);
   display: inline-block;
 }
- 
+
+.button-delete {
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 100%;
+  border-radius: 4px;
+  color: white;
+  background-color: #b91717;
+  padding: 4px 8px 4px 8px;
+  margin: 15px 0 0 0 ;
+  display: inline-block;
+}
+
 .button-status {
   font-size: 90%;
   border-radius: 4px;
@@ -186,6 +198,5 @@ td button.current-status-inactive {
   border-radius: 4px;
   background-color: transparent;
   cursor: pointer; 
-  /*background: #ffffff url("../images/icon_check.png") 50% 50% no-repeat;*/
 }
 
