@@ -24,7 +24,8 @@ class DatabasePersistence
         FROM exercises
           LEFT JOIN exercises_completed e ON (exercises.id = e.exercise_id)
         GROUP BY exercises.id
-        HAVING active = 't';
+        HAVING active = 't'
+        ORDER BY name;
       SQL
 
     elsif status == "inactive"
@@ -34,7 +35,8 @@ class DatabasePersistence
         FROM exercises
           LEFT JOIN exercises_completed e ON (exercises.id = e.exercise_id)
         GROUP BY exercises.id
-        HAVING active = 'f';
+        HAVING active = 'f'
+        ORDER BY name;
       SQL
     else
       <<~SQL
@@ -42,7 +44,8 @@ class DatabasePersistence
           COUNT(exercise_id) AS exercise_completed_count 
         FROM exercises
           LEFT JOIN exercises_completed e ON (exercises.id = e.exercise_id)
-        GROUP BY exercises.id;
+        GROUP BY exercises.id
+        ORDER BY active DESC, name;
       SQL
     end
   end
@@ -59,8 +62,12 @@ class DatabasePersistence
 # exercise/add------------------------------------------------------
 # checking for duplicate names when adding or editing
   def exercise_names(id)
-    sql = "SELECT id, name FROM exercises WHERE id != $1;"
-    query(sql, id).field_values('name')
+    if id.nil?
+      query("SELECT name FROM exercises;").field_values('name')
+    else
+      sql = "SELECT id, name FROM exercises WHERE id != $1;"
+      query(sql, id).field_values('name')
+    end
   end
 
 # insert data for new exercise

@@ -24,10 +24,6 @@ helpers do
     @storage.single_exercise_completed_count(id)
   end
 
-  def sort_exercies(exercise_list)
-    exercise_list.sort_by { |exercise| exercise[:active] }.reverse
-  end
-
   def button_status_class(current_status)
     current_status == 't' ? 'current-status-active' : 'current-status-inactive'
   end
@@ -38,8 +34,8 @@ def valid_exercise_status?(status)
   %w(active inactive all).include?(status)
 end
 
-def duplicate_exercise_name?(id, name)
-  existing_names = @storage.exercise_names(id)
+def duplicate_exercise_name?(name, *id)
+  existing_names = @storage.exercise_names(id.first)
   existing_names.map(&:downcase).include?(name.downcase)
 end
 
@@ -67,17 +63,21 @@ def toggle_active_status(current_status, id)
   end
 end
 
-def error_for_exercise_name(id, name)
+def error_for_exercise_name(name, id)
   if name.length <= 0 || name.length > 255
     'Name must be between 1 and 255 characters.'
-  elsif duplicate_exercise_name?(id, name)
-    'That exercise name is already in the system.'
+  elsif duplicate_exercise_name?(name, id)
+    "The name '#{name}' is already in the system."
   end
 end
 
 def existing_exercise_id?(id)
   id_list = @storage.exercise_id_list
   id_list.include?(id)
+end
+
+def error_for_no_exercise_id(id)
+  "Exercise with id '#{id}' does not exist." if existing_exercise_id?(id) == 'f'
 end
 
 def delete_exercise(id)
@@ -109,7 +109,7 @@ end
 post '/exercise/new' do
   name = params[:name]
   description = params[:description]
-  error = error_for_exercise_name(0, name)
+  error = error_for_exercise_name(name, nil)
 
   if error
     session[:error] = error
@@ -125,21 +125,38 @@ end
 post '/exercise/:id/status' do
   current_status = params[:current_status]
   id = params[:id].to_i
-  toggle_active_status(current_status, id)
+
+  toggle_active_status(current_status, id) if existing_exercise_id?(id)
 
   redirect "exercises/view/#{params[:page_status]}"
 end
 
 # View Single Exercise --------------------------
 get '/exercise/:id' do
-  @exercise = @storage.single_exercise_information(params[:id]).first
-  erb :single_exercise
+  id = params[:id]
+  error = error_for_no_exercise_id(id)
+
+  if error
+    session[:error] = error
+    redirect '/exercises/view/active'
+  else
+    @exercise = @storage.single_exercise_information(id).first
+    erb :single_exercise
+  end
 end
 
-# Update Single Exercise 
+# Update Single Exercise
 get '/exercise/update/:id' do
-  @exercise = @storage.single_exercise_information(params[:id]).first
-  erb :edit_exercise
+  id = params[:id]
+  error = error_for_no_exercise_id(id)
+
+  if error
+    session[:error] = error
+    redirect '/exercises/view/active'
+  else
+    @exercise = @storage.single_exercise_information(id).first
+    erb :edit_exercise
+  end
 end
 
 post '/exercise/update/:id' do
@@ -147,8 +164,13 @@ post '/exercise/update/:id' do
   name = params[:name]
   description = params[:description]
 
-  error = error_for_exercise_name(id, name)
+  error = error_for_no_exercise_id(id)
+  if error
+    session[:error] = error
+    redirect '/exercises/view/active'
+  end
 
+  error = error_for_exercise_name(name, id)
   if error
     session[:error] = error
     redirect "/exercise/update/#{id}"
@@ -161,11 +183,12 @@ end
 # Delete Single Exercise
 post '/exercise/delete/:id' do
   id = params[:id]
-
-  if existing_exercise_id?(id)
-    delete_exercise(id)
+  error = error_for_no_exercise_id(id)
+  if error
+    session[:error] = error
   else
-    session[:error] = 'Exercise with that id does not exist'
+    delete_exercise(id)
+    session[:success] = "Exercise '#{params[:name]}' has been deleted."
   end
 
   redirect '/exercises/view/active'
@@ -182,7 +205,8 @@ post '/session/completed' do
   if valid_workout_session?(params)
     save_workout_session(params)
     number_completed = completed_exercises(params).size
-    session[:success] = "Session logged. #{number_completed} exercises done. Good work!"
+    message = "Session logged. #{number_completed} exercises done. Good work!"
+    session[:success] = message
     redirect '/'
   else
     message = 'You must check off at least 1 exercise to save a workout session.'
@@ -196,4 +220,3 @@ end
 get '/reports' do
   'data goes here'
 end
-

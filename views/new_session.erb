@@ -12,8 +12,12 @@
           <li id="session">
             <input type="checkbox" name="<%= exercise[:id] %>" value="t" />
             <%= exercise[:name] %>
-            </li>
-      <% end %>
+          </li>
+        <% end %>
+    <input type='Submit' value="Save" />
+    </ul>
   </form>
-  <input type='Submit' value="Save" />
 <% end %>
+
+
+<a class="button-cancel" href="/exercises/view/active">Cancel</a>

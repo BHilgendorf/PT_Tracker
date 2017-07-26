@@ -7,7 +7,7 @@
     <th>Name</th>
     <th>Times Completed</th>
     <th>Active</th>
-    <% sort_exercies(@list).each do |exercise| %>
+    <% @list.each do |exercise| %>
     <tr>
       <td>
         <a href="/exercise/<%= exercise[:id] %>"><%= exercise[:name] %></a>

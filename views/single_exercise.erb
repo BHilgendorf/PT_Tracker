@@ -9,6 +9,7 @@
 <a class="button-status-edit" href="/exercise/update/<%= @exercise[:id] %>">EDIT</a>
 
 <form action="/exercise/delete/<%= @exercise[:id] %>" method="post" >
+  <input type="hidden" name="name" value="<%= @exercise[:name] %>" />
   <button type="submit" class="button-delete">Delete</button>
 </form>
 

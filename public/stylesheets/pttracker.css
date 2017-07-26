@@ -58,12 +58,21 @@ p.inactive {
   text-align: center;
 
 }
+
 .button-new {
   font-size: 110%;
   border-radius: 4px;
   color: white;
   background: rgb(66, 184, 221);
   display: inline-block;
+}
+
+.button-cancel {
+  font-size: 110%;
+  border-radius: 4px;
+  color: white;
+  background: #b91717;
+  padding: 5px 18px 5px 18px;
 }
 
 .button-delete {
@@ -75,7 +84,6 @@ p.inactive {
   background-color: #b91717;
   padding: 4px 8px 4px 8px;
   margin: 15px 0 0 0 ;
-  display: inline-block;
 }
 
 .button-status {
@@ -91,6 +99,7 @@ p.inactive {
   border-radius: 4px;
   color: white;
   background: rgb(66, 184, 221);
+  margin: 10px 0 0 0 ;
   display: inline-block;
 
 }
