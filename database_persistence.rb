@@ -147,6 +147,28 @@ class DatabasePersistence
     query(sql, name, description, id )
   end
 
+  # Home page
+  # Get total exercises completed cout
+
+  def total_exercise_count
+    sql = "SELECT COUNT(exercise_id) FROM exercises_completed;"
+    result = query(sql)
+    result.field_values('count').first
+  end
+
+  def total_session_count
+    sql = "SELECT COUNT(DISTINCT(session_id)) FROM exercises_completed;"
+    result = query(sql)
+    result.field_values('count').first
+  end
+
+  def unique_session_dates
+    sql = "SELECT DISTINCT(date_completed::date)
+                  FROM exercises_completed 
+                  ORDER BY date_completed DESC;"
+
+    query(sql).values.flatten
+  end
 
   private
 

@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'tilt/erubis'
+require 'date'
 require 'pry'
 
 require_relative 'database_persistence'
@@ -84,9 +85,27 @@ def delete_exercise(id)
   @storage.delete_exercise(id)
 end
 
+def determine_consecutive_days
+  dates = @storage.unique_session_dates
+  dates.map! { |date_string| Date.parse(date_string) }
+ 
+  streak = 1
+  dates.each_with_index do | date, index|
+    if date - 1 == dates[index + 1]
+      streak  += 1
+    else
+      return streak
+    end
+  end
+end
+
 # -----------------------------------------------
 
 get '/' do
+  @total_exercises_completed = @storage.total_exercise_count
+  @total_workout_sessions = @storage.total_session_count
+  @workout_streak = determine_consecutive_days.to_s
+
   erb :home
 end
 
@@ -218,5 +237,6 @@ end
 # Reports ------------------------------------------
 
 get '/reports' do
-  'data goes here'
+  
+  erb :reports
 end
