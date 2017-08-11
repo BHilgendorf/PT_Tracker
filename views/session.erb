@@ -1,0 +1,9 @@
+<h1>Exercises Completed</h1>
+
+<ul>
+  <% @single_session_data.each do |exercise| %>
+    <li>
+      <a href="/exercise/<%= exercise[:id] %>"><%= exercise[:name] %></a>
+    </li>
+  <% end %>
+</ul>

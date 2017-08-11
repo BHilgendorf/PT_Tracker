@@ -11,20 +11,16 @@
         <li><a href="/">Home</a></li>
         <li><a href="/exercises/view/active">Exercises</a></li>
         <li><a href="/session/new">Start Session</a></li>
-        <li><a href="/reports">Reports</a></li>
+        <li><a href="/session/history">Session History</a></li>
       </ul>
     </header>
 
     <% if session[:success] %>
-      <div class="success">
-        <p><%= session.delete(:success) %></p>
-      </div>
+      <p class="success"><%= session.delete(:success) %></p>
     <% end %>
 
     <% if session[:error] %>
-      <div class="error">
-        <p><%= session.delete(:error) %></p>
-      </div>
+      <p class="error"><%= session.delete(:error) %></p>
     <% end %>
 
     <%== yield %>

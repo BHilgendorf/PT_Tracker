@@ -125,6 +125,7 @@ class DatabasePersistence
     end
   end
 
+# count number of times exercise has been completed
   def single_exercise_completed_count(id)
     sql = "SELECT COUNT(exercise_id) FROM exercises_completed WHERE exercise_id = $1"
     query(sql, id).values[0][0].to_i
@@ -135,7 +136,7 @@ class DatabasePersistence
     query("SELECT id FROM exercises;").field_values('id')
   end
 
-# Delete single exercise
+# Delete single exercise -----------------------------------
   def delete_exercise(id)
     sql = "DELETE FROM exercises WHERE id = $1"
     query(sql, id)
@@ -162,12 +163,38 @@ class DatabasePersistence
     result.field_values('count').first
   end
 
-  def unique_session_dates
-    sql = "SELECT DISTINCT(date_completed::date)
-                  FROM exercises_completed 
-                  ORDER BY date_completed DESC;"
+# Get Session History Information --------------------
+  def session_history
+    sql = <<~SQL
+      SELECT session_id, date_completed::date, COUNT(exercise_id) FROM exercises_completed
+        GROUP BY date_completed::date, session_id
+        ORDER BY session_id;
+    SQL
+    result = query(sql)
 
-    query(sql).values.flatten
+    result.map do |tuple| 
+      { id: tuple["session_id"].to_i,
+        date_completed: tuple["date_completed"],
+        completed_count: tuple["count"].to_i
+      }
+    end
+  end
+
+
+  def single_session(id)
+    sql = <<~SQL
+      SELECT exercises.name, exercises.id FROM exercises_completed
+        INNER JOIN exercises ON (exercises_completed.exercise_id = exercises.id)
+        WHERE session_id = $1
+        ORDER BY exercises.name;
+    SQL
+
+    result = query(sql, id)
+    result.map do |tuple|
+      { id: tuple["id"].to_i,
+        name: tuple["name"]
+      }
+    end
   end
 
   private

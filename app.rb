@@ -21,16 +21,12 @@ before do
 end
 
 helpers do
-  def completed_count(id)
-    @storage.single_exercise_completed_count(id)
-  end
-
   def button_status_class(current_status)
     current_status == 't' ? 'current-status-active' : 'current-status-inactive'
   end
 end
 
-# ---------------------------------------------------------
+# Validation Checks-----------------------------------------------------
 def valid_exercise_status?(status)
   %w(active inactive all).include?(status)
 end
@@ -44,12 +40,45 @@ def valid_workout_session?(params)
   params.value?('t')
 end
 
+def existing_exercise_id?(id)
+  id_list = @storage.exercise_id_list
+  id_list.include?(id)
+end
+
+# Validation check with error message setting --------------
+def error_for_exercise_name(name, id)
+  if name.length <= 0 || name.length > 255
+    'Name must be between 1 and 255 characters.'
+  elsif duplicate_exercise_name?(name, id)
+    "The name '#{name}' is already in the system."
+  end
+end
+
+def error_for_no_exercise_id(id)
+  "Exercise with id '#{id}' does not exist." if existing_exercise_id?(id) == 'f'
+end
+
+def error_for_exercise_completed(id)
+  in_use = <<~MESSAGE
+    Exercise has been marked completed as part of a session and
+     connot be deleted.
+  MESSAGE
+
+  in_use if completed_count(id) > 0
+# end
+
+# Accessing completed exercise information ------------------
 def completed_exercises(params)
   list = params.keys.map(&:to_i)
   list.delete(0)
   list
 end
 
+def completed_count(id)
+  @storage.single_exercise_completed_count(id)
+end
+
+# Data updates-----------------------------------------------
 def save_workout_session(params)
   list = completed_exercises(params)
   session_id = @storage.next_session_id
@@ -64,47 +93,15 @@ def toggle_active_status(current_status, id)
   end
 end
 
-def error_for_exercise_name(name, id)
-  if name.length <= 0 || name.length > 255
-    'Name must be between 1 and 255 characters.'
-  elsif duplicate_exercise_name?(name, id)
-    "The name '#{name}' is already in the system."
-  end
-end
-
-def existing_exercise_id?(id)
-  id_list = @storage.exercise_id_list
-  id_list.include?(id)
-end
-
-def error_for_no_exercise_id(id)
-  "Exercise with id '#{id}' does not exist." if existing_exercise_id?(id) == 'f'
-end
-
 def delete_exercise(id)
   @storage.delete_exercise(id)
 end
 
-def determine_consecutive_days
-  dates = @storage.unique_session_dates
-  dates.map! { |date_string| Date.parse(date_string) }
- 
-  streak = 1
-  dates.each_with_index do | date, index|
-    if date - 1 == dates[index + 1]
-      streak  += 1
-    else
-      return streak
-    end
-  end
-end
-
-# -----------------------------------------------
-
+# Routes
+# Home Page --------------------------------------------
 get '/' do
   @total_exercises_completed = @storage.total_exercise_count
   @total_workout_sessions = @storage.total_session_count
-  @workout_streak = determine_consecutive_days.to_s
 
   erb :home
 end
@@ -143,8 +140,7 @@ end
 # Toggle exercises status ---------------------
 post '/exercise/:id/status' do
   current_status = params[:current_status]
-  id = params[:id].to_i
-
+  id = params[:id]
   toggle_active_status(current_status, id) if existing_exercise_id?(id)
 
   redirect "exercises/view/#{params[:page_status]}"
@@ -164,7 +160,7 @@ get '/exercise/:id' do
   end
 end
 
-# Update Single Exercise
+# Update Single Exercise-----------------------------
 get '/exercise/update/:id' do
   id = params[:id]
   error = error_for_no_exercise_id(id)
@@ -199,9 +195,16 @@ post '/exercise/update/:id' do
   end
 end
 
-# Delete Single Exercise
+# Delete Single Exercise -------------------------
 post '/exercise/delete/:id' do
   id = params[:id]
+  error = error_for_exercise_completed(id)
+
+  if error
+    session[:error] = error
+    redirect "/exercise/#{id}"
+  end
+
   error = error_for_no_exercise_id(id)
   if error
     session[:error] = error
@@ -216,7 +219,7 @@ end
 # Start PT Session -------------------------------
 
 get '/session/new' do
-  @session_list = @storage.session_exercise_list
+  @active_exercise_list = @storage.session_exercise_list
   erb :new_session
 end
 
@@ -234,9 +237,18 @@ post '/session/completed' do
   end
 end
 
-# Reports ------------------------------------------
+# Session Data------------------------------------------
 
-get '/reports' do
-  
-  erb :reports
+get '/session/history' do
+  # need to handle no session data
+  @sessions_completed = @storage.session_history
+  erb :sessions
+end
+
+get '/session/:id' do
+  # need to handle invalid session id
+  id = params[:id]
+
+  @single_session_data = @storage.single_session(id)
+  erb :session
 end

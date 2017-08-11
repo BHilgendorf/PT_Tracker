@@ -168,7 +168,7 @@ p.inactive {
 .error {
   color: #111111;
   background: #e697ae;
-  padding: 1px;
+  padding: 5px;
   font-weight: bold;
   text-align: center;
 
@@ -177,7 +177,7 @@ p.inactive {
 .success {
   color: #111111;
   background: #8fd06b;
-  padding: 1px;
+  padding: 5px;
   font-weight: bold;
   text-align: center;
 }
@@ -208,4 +208,6 @@ td button.current-status-inactive {
   background-color: transparent;
   cursor: pointer; 
 }
+
+
 

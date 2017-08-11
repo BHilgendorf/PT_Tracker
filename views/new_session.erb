@@ -1,14 +1,14 @@
 <h2>Exercise List</h2>
 
-<% if @session_list.empty? %>
+<% if @active_exercise_list.empty? %>
   <p class="inactive">You have no active exercises.</p>
   <p class="inactive">Go to the <a class="button-new" href="/exercises/view/all">exercises</a> page and add new exercises or activate some inactive ones. </p>
 
 <% else %>
   <form action="/session/completed" method="post">
+    <p>Check off all exercises you've done for this session</p>
     <ul>
-      <p>Check off all exercises you've done for this session</p>
-        <% @session_list.each do |exercise| %>
+        <% @active_exercise_list.each do |exercise| %>
           <li id="session">
             <input type="checkbox" name="<%= exercise[:id] %>" value="t" />
             <%= exercise[:name] %>

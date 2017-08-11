@@ -1,0 +1,15 @@
+<h1>Previous Sessions</h1>  
+
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Exercises Completed</th>
+    <% @sessions_completed.each do |session| %>
+    <tr>
+      <td>
+        <a href="/session/<%= session[:id] %>"><%= session[:date_completed] %>
+      </td>
+      <td><%= session[:completed_count] %></td>
+    </tr>
+    <% end %>
+</table>
