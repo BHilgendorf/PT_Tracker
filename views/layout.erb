@@ -7,12 +7,14 @@
 
   <body>
     <header> 
-      <ul id="navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/exercises/view/active">Exercises</a></li>
-        <li><a href="/session/new">Start Session</a></li>
-        <li><a href="/session/history">Session History</a></li>
-      </ul>
+    <nav class="navigation">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/exercises/view/active">Exercises</a></li>
+          <li><a href="/session/new">Start Session</a></li>
+          <li><a href="/session/history">Session History</a></li>
+        </ul>
+      </nav>
     </header>
 
     <% if session[:success] %>

@@ -1,20 +1,25 @@
-<h3>Add a new exercise</h3>
-
 <form action="/exercise/new" method="post">
-<ul class="form-exercise-new">
-  <li>
-    <label>Exercise Name <span class="required">*</span></label>
-    <input type="text" name="name" class="field-long" />
-  </li>
-  <li>
-    <label>Description</label>
-    <textarea name="description" class="field-long field-textarea"></textarea>
-  </li>
-  <li>
-    <input type='Submit' value="ADD" />
-  </li>
-</ul>
+  <fieldset>
+    <legend>Add New Exercise</legend>
+    <dl class="form exercise-new">
+      <dt>
+        <label for="exercise_name">Exercise Name<span class="required">*</span></label>
+      </dt>
+      <dd>
+        <input type="text" name="name" class="field-long" id="exercise_name" required />
+      </dd>
+
+      <dt>
+        <label for="exercise_description">Description</label>
+      </dt>
+      <dd>
+        <textarea name="description" id="exercise_description"></textarea>
+      </dd>
+    </dl>
+
+    <input type='Submit' value="ADD" class="save" />
+  </fieldset>
 </form>
 
-<a class="button-cancel" href="/exercises/view/active">Cancel</a>
+<a class="btn cancel" href="/exercises/view/active">Cancel</a>
 

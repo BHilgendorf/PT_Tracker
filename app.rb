@@ -65,7 +65,7 @@ def error_for_exercise_completed(id)
   MESSAGE
 
   in_use if completed_count(id) > 0
-# end
+end
 
 # Accessing completed exercise information ------------------
 def completed_exercises(params)
