@@ -1,6 +1,6 @@
-<h1>Exercises</h1>  
+<h2>Exercises</h2>  
 
-<a class="button-new" href="/exercise/new">Add Exercise</a>
+<a class="btn add-exercise" href="/exercise/new">Add Exercise</a>
 
 <table>
   <tr>
@@ -26,13 +26,13 @@
 </table>
 
 <% if params[:status] == "active" %>
-  <a class="button-status" href="/exercises/view/inactive">Show Inactive Exercises</a>
-  <a class="button-status" href="/exercises/view/all">Show All Exercises</a>
+  <a class="btn status" href="/exercises/view/inactive">Show Inactive Exercises</a>
+  <a class="btn status" href="/exercises/view/all">Show All Exercises</a>
 <% elsif params[:status] == "inactive" %>
-  <a class="button-status" href="/exercises/view/active">Show Active Exercises</a>
-  <a class="button-status" href="/exercises/view/all">Show All Exercises</a>
+  <a class="btn status" href="/exercises/view/active">Show Active Exercises</a>
+  <a class="btn status" href="/exercises/view/all">Show All Exercises</a>
 <% elsif params[:status] == "all" %>
-  <a class="button-status" href="/exercises/view/active">Show Active Exercises</a>
-  <a class="button-status" href="/exercises/view/inactive">Show Inactive Exercises</a>
+  <a class="btn status" href="/exercises/view/active">Show Active Exercises</a>
+  <a class="btn status" href="/exercises/view/inactive">Show Inactive Exercises</a>
 <% end %>
 

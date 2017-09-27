@@ -1,20 +1,82 @@
 /*================================================== */
+/* CSS RESET */
+/*================================================== */
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+
+/*================================================== */
 /* Main Styles */
 /*================================================== */
 
 html {
   font-size: 16px;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
 body {
   font-family: "Courier New", Courier, "Anadale Mono", monospace;
   min-width: 700px;
-  box-sizing: border-box;
 }
 
 
 h1 {
-  font-size: 2rem;
+  font-size: 1.25rem;
+  text-align: center;
+  margin-bottom: 3%;
 }
 
 table {
@@ -25,8 +87,11 @@ table {
 a {
   text-decoration: none;
   text-transform: uppercase;
-  padding: 6px 18px 5px 18px;
   color: black;
+}
+
+input {
+  display: block;
 }
 
 /*================================================== */
@@ -35,20 +100,25 @@ a {
 
 header {
   background-color: #666;
-  padding: 10px;
-  margin: 0 auto 20px auto;
+  padding: 15px;
+  margin-bottom: 20px;
 }
 
 .navigation {
+  margin: 0 auto;
   text-align: center;
 }
 
-.navigation li {
+ul {
+  margin: 0 auto;
+}
+
+header li {
   display: inline-block;
 }
 
 header a {
-  padding: 6px 18px 5px 18px;
+  padding: 6px 18px 6px 18px;
   color: #e4e5ec;
 }
 
@@ -65,9 +135,11 @@ fieldset {
 
 legend {
   font-weight: bold;
+  margin-bottom: 20px;
 }
 
-input[type="text"] {
+input[type="text"],
+.field-long {
   width: 80%;
 }
 
@@ -85,15 +157,20 @@ dt {
 }
 
 dd {
-  margin: 10px 0 0 110px;
+  margin: 10px 0 20px 110px;
 }
 
 .required {
   color: red;
 }
 
-input[type='Submit'] {
-  float: right;
+.new-session,
+.exercise-data {
+  padding-bottom: 5%;
+  width: 90%;
+  margin: 4% auto;
+  line-height: 1.5em;
+  position: relative;
 }
 
 /* ---------------------------*/
@@ -120,47 +197,71 @@ th {
 
 
 
-
-
 /* ================================================= */
 /* Buttons */
 /* ================================================= */
 
-input[type='Submit'],
+input[type="submit"],
 .btn {
+  width: 100px;
   border: 1px solid #ccc;
-  padding: 10px 25px;
+  padding: 10px 10px;
   border-radius: 4px;
   color: #fff;
-}
-
-.save {
-  background-color: #0087cc;;
-}
-
-.cancel {
-  padding: 5px 15px;
-  background: #b91717;
-  float: right;
-  margin-right: 14%;
-}
-
-p.inactive {
-  font-size: 100%;
+  font-size: 0.80em;
   text-align: center;
+}
+
+
+.save,
+.edit {
+  background-color: #0087cc;
+}
+
+.cancel,
+.delete {
+  background: #b91717;
+}
+
+
+.exercise-data .cancel {
+  position: absolute;
+  bottom: 15px;
+  right: 16.5%;
+}
+
+.exercise-data .save {
+  position: absolute;
+  bottom: 15px;
+}
+
+.new-session .save {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
 
 }
 
-.button-new {
+.new-session .cancel {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
+
+.add-exercise {
   font-size: 110%;
-  border-radius: 4px;
-  color: white;
-  background: rgb(66, 184, 221);
+  background-color: #0087cc;
   display: inline-block;
+  width: 200px;
 }
 
+.status {
+  background: #999;
+  display: inline-block;
+  width: 200px;
+ }
 
-
+/*
 .button-delete {
   text-transform: uppercase;
   text-decoration: none;
@@ -170,15 +271,9 @@ p.inactive {
   background-color: #b91717;
   padding: 4px 8px 4px 8px;
   margin: 15px 0 0 0 ;
-}
+}*/
 
-.button-status {
-  font-size: 90%;
-  border-radius: 4px;
-  color: white;
-  background: #999;
-  display: inline-block;
- }
+
 
 .button-status-edit {
   font-size: 100%;

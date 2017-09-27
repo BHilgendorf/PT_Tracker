@@ -1,21 +1,22 @@
-<ul class="exercise-display">
-  <h4>Exercise Name</h4>
-  <li><%= @exercise[:name] %></li>
+<div class="exercise-data">
+  <dl>
+    <dt>Exercise Name</dt>
+    <dd><%= @exercise[:name] %></dd>
 
-  <h4>Description</h4>
-  <li class="description"><%= @exercise[:description] %></li>
-</ul>
+    <dt>Description</dt>
+    <dd class="description"><%= @exercise[:description] %></dd>
+  </dl>
 
-<a class="button-status-edit" href="/exercise/update/<%= @exercise[:id] %>">EDIT</a>
+  <a class="btn edit" href="/exercise/update/<%= @exercise[:id] %>">EDIT</a>
 
-<form action="/exercise/delete/<%= @exercise[:id] %>" method="post" >
-  <input type="hidden" name="name" value="<%= @exercise[:name] %>" />
-  <button type="submit" class="button-delete">Delete</button>
-</form>
+    <form action="/exercise/delete/<%= @exercise[:id] %>" method="post" >
+    <input type="hidden" name="name" value="<%= @exercise[:name] %>" />
+    <button type="submit" class="btn delete">Delete</button>
+  </form>
 
-<h4>Stats for <%= @exercise[:name] %></h4>
-<ul>
-  <li>Completed <%= completed_count(@exercise[:id]) %> times</li>
-</ul>
-
+  <h4>Stats for <%= @exercise[:name] %></h4>
+  <ul>
+    <li>Completed <%= completed_count(@exercise[:id]) %> times</li>
+  </ul>
+</div>
 

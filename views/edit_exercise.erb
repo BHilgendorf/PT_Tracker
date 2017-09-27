@@ -1,20 +1,26 @@
-<h3>Edit data for '<%= @exercise[:name] %>' </h3>
+<div class="exercise-data">
+  <form action="/exercise/update/<%= @exercise[:id] %>" method="post">
+    <fieldset>
+      <legend>Edit data for '<%= @exercise[:name] %>' </legend>
+      <dl>
+        <dt>
+          <label for="exercise_name">Exercise Name<span class="required">*</span></label>
+      </dt>
+      <dd>
+         <input type="text" name="name" id="exercise_name" value="<%= @exercise[:name] %>" required />
+      </dd>
 
-<form action="/exercise/update/<%= @exercise[:id] %>" method="post">
-<ul class="form-exercise-new">
-  <li>
-    <label>Exercise Name <span class="required">*</span></label>
-    <input type="text" name="name" class="field-long" value="<%= @exercise[:name] %>" />
-  </li>
-  <li>
-    <label>Description</label>
-    <textarea name="description" class="field-long field-textarea"><%= @exercise[:description] %></textarea>
-  </li>
-  <li>
-    <input type='Submit' value="Save" />
-  </li>
-</ul>
-</form>
+      <dt>
+        <label for="exercise_description">Description</label>
+      </dt>
+      <dd>
+        <textarea name="description" id="exercise_description"><%= @exercise[:description] %></textarea>
+      </dd>
+    </dl>
 
+      <input type="submit" value="save"  class="save" />
+    </fieldset>
+  </form>
 
-<a class="button-cancel" href="/exercise/<%= @exercise[:id] %>">Cancel</a>
+  <a class="btn cancel" href="/exercise/<%= @exercise[:id] %>">Cancel</a>
+</div>

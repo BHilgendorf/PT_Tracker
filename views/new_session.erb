@@ -1,23 +1,23 @@
-<h1>Exercise List</h1>
+<div class="new-session">
+  <% if @active_exercise_list.empty? %>
+    <p class="inactive">You have no active exercises.</p>
+    <p class="inactive">Go to the <a class="button-new" href="/exercises/view/all">exercises</a> page and add new exercises or activate some inactive ones. </p>
 
-<% if @active_exercise_list.empty? %>
-  <p class="inactive">You have no active exercises.</p>
-  <p class="inactive">Go to the <a class="button-new" href="/exercises/view/all">exercises</a> page and add new exercises or activate some inactive ones. </p>
+  <% else %>
+    <h1>Check off all exercises you've done for this session</h1>
 
-<% else %>
-  <form action="/session/completed" method="post">
-    <p>Check off all exercises you've done for this session</p>
-    <ul>
-        <% @active_exercise_list.each do |exercise| %>
-          <li id="session">
-            <input type="checkbox" name="<%= exercise[:id] %>" value="t" />
-            <%= exercise[:name] %>
-          </li>
-        <% end %>
-    <input type='Submit' value="Save" />
-    </ul>
-  </form>
-<% end %>
-
-
-<a class="button-cancel" href="/exercises/view/active">Cancel</a>
+    <form action="/session/completed" method="post">
+      <ul>
+          <% @active_exercise_list.each do |exercise| %>
+            <li>
+              <input type="checkbox" name="<%= exercise[:id] %>" value="t" id="exercise_name">
+              <%= exercise[:name] %>
+            </li>
+          <% end %>
+      </ul>
+       <input type='Submit' value="Save" class="save" />
+    </form>
+  <% end %>
+  
+  <a class="btn cancel" href="/exercises/view/active">Cancel</a>
+</div>
