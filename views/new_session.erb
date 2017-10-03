@@ -1,4 +1,4 @@
-<div class="new-session">
+<div class="wrapper new-session">
   <% if @active_exercise_list.empty? %>
     <p class="inactive">You have no active exercises.</p>
     <p class="inactive">Go to the <a class="button-new" href="/exercises/view/all">exercises</a> page and add new exercises or activate some inactive ones. </p>
@@ -10,7 +10,7 @@
       <ul>
           <% @active_exercise_list.each do |exercise| %>
             <li>
-              <input type="checkbox" name="<%= exercise[:id] %>" value="t" id="exercise_name">
+              <input type="checkbox" name="<%= exercise[:id] %>" value="t" / >
               <%= exercise[:name] %>
             </li>
           <% end %>

@@ -1,16 +1,40 @@
-<h1>Previous Sessions</h1>  
+<div class="wrapper session-history">
+  <h1>Previous Sessions</h1>  
 
-<table>
-  <tr>
-    <th>Date</th>
-    <th>Exercises Completed</th>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Exercises Completd</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <% @sessions_completed.each do |session| %>
+        <td>
+          <a href="/session/<%= session[:id] %>"><%= session[:date_completed] %></a>
+        </td>
+        <td>
+          <%= session[:completed_count] %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<!-- 
+  <header class="session-history">
+    <p>Date</p>
+    <p>Exercises Completed</p>
+  </header>
+
+ 
+  <dl>
     <% @sessions_completed.each do |session| %>
-    <tr>
-      <td>
-        <a href="/session/<%= session[:id] %>"><%= session[:date_completed] %>
-      </td>
-      <td><%= session[:completed_count] %></td>
-    </tr>
-    <% end %>
-</table>
+      <dt><a href="/session/<%= session[:id] %>"><%= session[:date_completed] %></a></dt>
+      <dd><%= session[:completed_count] %></dd>
+     <% end %>
+  </dl> -->
+
+</div>
+
 

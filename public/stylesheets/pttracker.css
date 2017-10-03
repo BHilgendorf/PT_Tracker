@@ -80,8 +80,26 @@ h1 {
 }
 
 table {
-  width: 900px; 
-  table-layout: auto#666
+  width: 100%;
+  border: 1px solid #111;
+  border-collapse: collapse;
+
+}
+
+th {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-bottom: 2px solid #111;
+  border-top: 1px solid #999;
+  font-weight: bold;
+}
+
+th, td {
+  padding: 7px 10px 10px 10px;
+}
+
+tr:nth-child(even) {
+  background: #b3c3d0;
 }
 
 a {
@@ -90,8 +108,9 @@ a {
   color: black;
 }
 
-input {
-  display: block;
+.wrapper {
+  max-width: 800px;
+  margin: 0 auto 30px auto;
 }
 
 /*================================================== */
@@ -109,9 +128,6 @@ header {
   text-align: center;
 }
 
-ul {
-  margin: 0 auto;
-}
 
 header li {
   display: inline-block;
@@ -124,11 +140,19 @@ header a {
 
 
 /*================================================== */
+/* Reports*/
+/*================================================== */
+.session-history {
+  text-align: center;
+}
+
+
+
+/*================================================== */
 /* Forms */
 /*================================================== */
 
 fieldset {
-  width: 70%;
   margin: 0 auto 20px auto;
   padding-bottom: 3%;
 }
@@ -167,7 +191,6 @@ dd {
 .new-session,
 .exercise-data {
   padding-bottom: 5%;
-  width: 90%;
   margin: 4% auto;
   line-height: 1.5em;
   position: relative;
@@ -175,9 +198,6 @@ dd {
 
 /* ---------------------------*/
 
-th, td {
-  padding: 7px 10px 10px 10px;
-}
 
 td.center-display {
   text-align: center;
@@ -187,13 +207,7 @@ td.right-display {
   text-align: right;
 }
 
-th {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 90%;
-  border-bottom: 3px solid #111111;
-  border-top: 1px solid #999;
-}
+
 
 
 

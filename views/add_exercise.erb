@@ -1,27 +1,27 @@
-<div class="exercise-data">
-  <form action="/exercise/new" method="post">
-    <fieldset>
-      <legend>Add New Exercise</legend>
-      <dl>
-        <dt>
-          <label for="exercise_name">Exercise Name<span class="required">*</span></label>
-        </dt>
-        <dd>
-          <input type="text" name="name" id="exercise_name" required />
-        </dd>
+  <div class="wrapper exercise-data">
+    <form action="/exercise/new" method="post">
+      <fieldset>
+        <legend>Add New Exercise</legend>
+        <dl>
+          <dt>
+            <label for="exercise_name">Exercise Name<span class="required">*</span></label>
+          </dt>
+          <dd>
+            <input type="text" name="name" id="exercise_name" required />
+          </dd>
 
-        <dt>
-          <label for="exercise_description">Description</label>
-        </dt>
-        <dd>
-          <textarea name="description" id="exercise_description"></textarea>
-        </dd>
-      </dl>
+          <dt>
+            <label for="exercise_description">Description</label>
+          </dt>
+          <dd>
+            <textarea name="description" id="exercise_description"></textarea>
+          </dd>
+        </dl>
 
-      <input type='Submit' value="ADD" class="save" />
-    </fieldset>
-  </form>
+        <input type='Submit' value="ADD" class="save" />
+      </fieldset>
+    </form>
 
-  <a class="btn cancel" href="/exercises/view/active">Cancel</a>
-</div>
+    <a class="btn cancel" href="/exercises/view/active">Cancel</a>
+  </div>
 
