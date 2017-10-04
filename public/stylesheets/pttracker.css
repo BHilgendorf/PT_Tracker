@@ -68,7 +68,8 @@ html {
 }
 
 body {
-  font-family: "Courier New", Courier, "Anadale Mono", monospace;
+  font-family: "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #888;
   min-width: 700px;
 }
 
@@ -91,36 +92,33 @@ th {
   letter-spacing: 0.1em;
   border-bottom: 2px solid #111;
   border-top: 1px solid #999;
-  font-weight: bold;
 }
 
 th, td {
   padding: 7px 10px 10px 10px;
 }
 
-tr:nth-child(even) {
-  background: #b3c3d0;
-}
 
 a {
   text-decoration: none;
   text-transform: uppercase;
-  color: black;
+  color: #888;
 }
 
 .wrapper {
   max-width: 800px;
-  margin: 0 auto 30px auto;
+  margin: 0 auto;
 }
 
 /*================================================== */
 /* Navigation */
 /*================================================== */
 
-header {
-  background-color: #666;
-  padding: 15px;
+.main {
+  padding: 25px;
   margin-bottom: 20px;
+  background: #335067;
+
 }
 
 .navigation {
@@ -128,14 +126,20 @@ header {
   text-align: center;
 }
 
-
-header li {
+.main li {
   display: inline-block;
 }
 
-header a {
+.main a {
   padding: 6px 18px 6px 18px;
-  color: #e4e5ec;
+  color: #648880;
+}
+
+.main a:hover {
+  border: 1px solid black;
+  background: white;
+  color: black;
+  border-radius: 5px;
 }
 
 
@@ -144,6 +148,11 @@ header a {
 /*================================================== */
 .session-history {
   text-align: center;
+}
+
+tbody tr:hover {
+  background: #648880;
+  color: #fff;
 }
 
 
@@ -196,19 +205,34 @@ dd {
   position: relative;
 }
 
-/* ---------------------------*/
 
+/* ================================================= */
+/*  Exercises Page */
+/* ================================================= */
 
-td.center-display {
-  text-align: center;
+.exercise-list {
+  position: relative;
+  padding: 15px 0;
+  border-top: 2px solid #999;
+  border-bottom: 2px solid #999;
+  margin-bottom: 15px;
 }
 
-td.right-display {
-  text-align: right;
+.exercise-list form {
+  display: inline-block;
+  position: absolute;
+  right: 0;
 }
 
+.exercise-list li {
+  line-height: 2.5rem;
+}
 
-
+.exercise-list p {
+  display: inline-block;
+  position: absolute;
+  right: 15%;
+}
 
 
 /* ================================================= */
@@ -275,6 +299,30 @@ input[type="submit"],
   width: 200px;
  }
 
+/* Exercises Active Icon/Button */
+.current-status-active {
+  height: 28px;
+  width: 28px;
+  color: transparent;
+  border: 1px solid #666666;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer; 
+  background: #fff url("../images/icon_check.png") 50% 50% no-repeat;
+}
+
+/* Exercises Inactive Icon/Button*/
+.current-status-inactive {
+  height: 28px;
+  width: 28px;
+  color: transparent;
+  border: 1px solid #666666;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer; 
+}
+
+
 /*
 .button-delete {
   text-transform: uppercase;
@@ -298,7 +346,6 @@ input[type="submit"],
   display: inline-block;
 
 }
-
 
 
 .exercise-display {
@@ -349,26 +396,8 @@ input[type="submit"],
 }
 
 
-td button.current-status-active {
-  height: 28px;
-  width: 28px;
-  color: transparent;
-  border: 1px solid #666666;
-  border-radius: 4px;
-  background-color: transparent;
-  cursor: pointer; 
-  background: #ffffff url("../images/icon_check.png") 50% 50% no-repeat;
-}
 
-td button.current-status-inactive {
-  height: 28px;
-  width: 28px;
-  color: transparent;
-  border: 1px solid #666666;
-  border-radius: 4px;
-  background-color: transparent;
-  cursor: pointer; 
-}
+
 
 
 

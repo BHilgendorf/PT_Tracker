@@ -1,8 +1,26 @@
 <div class="wrapper">
-  <h2>Exercises</h2>  
+  <h1>Exercises</h1>  
 
   <a class="btn add-exercise" href="/exercise/new">Add Exercise</a>
 
+<div class="exercise-list">
+  <ul>
+    <% @list.each do |exercise| %>
+    <li>
+      <a href="/exercise/<%= exercise[:id] %>"><%= exercise[:name] %></a>
+      <p><%= exercise[:completed_count] %></p>
+      <form action="/exercise/<%= exercise[:id] %>/status" method="post">
+        <input type="hidden" name="current_status" value="<%= exercise[:active] %>" />
+        <input type="hidden" name="page_status" value="<%= params[:status] %>" />
+        <button type="submit" class="<%= button_status_class(exercise[:active]) %>"></button>
+      </form>
+    </li>
+    <% end %>
+  </ul>
+</div>
+
+
+<!-- </div>
   <table>
     <tr>
       <th>Name</th>
@@ -24,7 +42,7 @@
 
       </tr>
       <% end %>
-  </table>
+  </table> -->
 
   <% if params[:status] == "active" %>
     <a class="btn status" href="/exercises/view/inactive">Show Inactive Exercises</a>
@@ -37,4 +55,6 @@
     <a class="btn status" href="/exercises/view/inactive">Show Inactive Exercises</a>
   <% end %>
 </div>
+
+
 
