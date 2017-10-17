@@ -132,7 +132,8 @@ a {
 
 .main a {
   padding: 6px 18px 6px 18px;
-  color: #648880;
+  /*color: #648880;*/
+  color: #999;
 }
 
 .main a:hover {
@@ -148,10 +149,15 @@ a {
 /*================================================== */
 .session-history {
   text-align: center;
+  margin-bottom: 40px;
 }
 
-tbody tr:hover {
+ tr:hover  {
   background: #648880;
+  color: #fff;
+}
+
+tr:hover a {
   color: #fff;
 }
 
@@ -209,6 +215,23 @@ dd {
 /* ================================================= */
 /*  Exercises Page */
 /* ================================================= */
+.exercise-headers  ul {
+  width: 100%;
+}
+
+.exercise-headers  li {
+  display: inline-block;
+  padding: 5px 0 5px 0;
+}
+
+.exercise-headers li:first-child {
+  margin-left: 68%;
+}
+
+.exercise-headers li:last-child {
+  margin-left: 7%;
+}
+
 
 .exercise-list {
   position: relative;
@@ -221,7 +244,7 @@ dd {
 .exercise-list form {
   display: inline-block;
   position: absolute;
-  right: 0;
+  right: 35px;
 }
 
 .exercise-list li {
@@ -231,8 +254,9 @@ dd {
 .exercise-list p {
   display: inline-block;
   position: absolute;
-  right: 15%;
+  right: 25%;
 }
+
 
 
 /* ================================================= */

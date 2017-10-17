@@ -146,19 +146,19 @@ post '/exercise/:id/status' do
   redirect "exercises/view/#{params[:page_status]}"
 end
 
-# View Single Exercise --------------------------
-get '/exercise/:id' do
-  id = params[:id]
-  error = error_for_no_exercise_id(id)
+# # View Single Exercise --------------------------
+# get '/exercise/:id' do
+#   id = params[:id]
+#   error = error_for_no_exercise_id(id)
 
-  if error
-    session[:error] = error
-    redirect '/exercises/view/active'
-  else
-    @exercise = @storage.single_exercise_information(id).first
-    erb :single_exercise
-  end
-end
+#   if error
+#     session[:error] = error
+#     redirect '/exercises/view/active'
+#   else
+#     @exercise = @storage.single_exercise_information(id).first
+#     erb :single_exercise
+#   end
+# end
 
 # Update Single Exercise-----------------------------
 get '/exercise/update/:id' do
@@ -191,7 +191,7 @@ post '/exercise/update/:id' do
     redirect "/exercise/update/#{id}"
   else
     @storage.update_exercise_data(id, name, description)
-    redirect "/exercise/#{id}"
+    redirect '/exercises/view/active'
   end
 end
 

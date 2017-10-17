@@ -22,5 +22,10 @@
     </fieldset>
   </form>
 
-  <a class="btn cancel" href="/exercise/<%= @exercise[:id] %>">Cancel</a>
+   <form action="/exercise/delete/<%= @exercise[:id] %>" method="post" >
+    <input type="hidden" name="name" value="<%= @exercise[:name] %>" />
+    <button type="submit" class="btn delete">Delete</button>
+  </form>
+
+  <a class="btn cancel" href="/exercises/view/active">Cancel</a>
 </div>

@@ -8,17 +8,15 @@
         <th>Exercises Completd</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <% @sessions_completed.each do |session| %>
-        <td>
-          <a href="/session/<%= session[:id] %>"><%= session[:date_completed] %></a>
-        </td>
-        <td>
-          <%= session[:completed_count] %>
-        </td>
-      </tr>
-      <% end %>
+    <tbody class="session_history">
+        <tr>
+          <% @sessions_completed.each do |session| %>
+            <td>
+              <a href="/session/<%= session[:id] %>"><%= session[:date_completed] %></a>
+            </td>
+            <td><%= session[:completed_count] %></td>
+          </tr>
+          <% end %>
     </tbody>
   </table>
 </div>

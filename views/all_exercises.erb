@@ -3,56 +3,40 @@
 
   <a class="btn add-exercise" href="/exercise/new">Add Exercise</a>
 
-<div class="exercise-list">
-  <ul>
-    <% @list.each do |exercise| %>
-    <li>
-      <a href="/exercise/<%= exercise[:id] %>"><%= exercise[:name] %></a>
-      <p><%= exercise[:completed_count] %></p>
-      <form action="/exercise/<%= exercise[:id] %>/status" method="post">
-        <input type="hidden" name="current_status" value="<%= exercise[:active] %>" />
-        <input type="hidden" name="page_status" value="<%= params[:status] %>" />
-        <button type="submit" class="<%= button_status_class(exercise[:active]) %>"></button>
-      </form>
-    </li>
-    <% end %>
-  </ul>
+  <div class="exercise-headers">
+    <ul>
+      <li>Times Completed</li>
+      <li>Active</li>
+    </ul>
+  </div>
+
+  <div class="exercise-list">
+    <ul>
+      <% @list.each do |exercise| %>
+      <li>
+        <a href="/exercise/update/<%= exercise[:id] %>"><%= exercise[:name] %></a>
+        <p><%= exercise[:completed_count] %></p>
+        <form action="/exercise/<%= exercise[:id] %>/status" method="post">
+          <input type="hidden" name="current_status" value="<%= exercise[:active] %>" />
+          <input type="hidden" name="page_status" value="<%= params[:status] %>" />
+          <button type="submit" class="<%= button_status_class(exercise[:active]) %>"></button>
+        </form>
+      </li>
+      <% end %>
+    </ul>
 </div>
 
 
-<!-- </div>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Times Completed</th>
-      <th>Active</th>
-      <% @list.each do |exercise| %>
-      <tr>
-        <td>
-          <a href="/exercise/<%= exercise[:id] %>"><%= exercise[:name] %></a>
-        </td>
-        <td class="center-display"><%= exercise[:completed_count] %></td>
-        <td class="right-display">
-          <form action="/exercise/<%= exercise[:id] %>/status" method="post">
-            <input type="hidden" name="current_status" value="<%= exercise[:active] %>" />
-            <input type="hidden" name="page_status" value="<%= params[:status] %>" />
-            <button type="submit" class="<%= button_status_class(exercise[:active]) %>"></button>
-          </form>
-        </td>
-
-      </tr>
-      <% end %>
-  </table> -->
 
   <% if params[:status] == "active" %>
-    <a class="btn status" href="/exercises/view/inactive">Show Inactive Exercises</a>
-    <a class="btn status" href="/exercises/view/all">Show All Exercises</a>
+    <a class="btn status" href="/exercises/view/inactive">Show Inactive</a>
+    <a class="btn status" href="/exercises/view/all">Show All</a>
   <% elsif params[:status] == "inactive" %>
-    <a class="btn status" href="/exercises/view/active">Show Active Exercises</a>
-    <a class="btn status" href="/exercises/view/all">Show All Exercises</a>
+    <a class="btn status" href="/exercises/view/active">Show Active</a>
+    <a class="btn status" href="/exercises/view/all">Show All</a>
   <% elsif params[:status] == "all" %>
-    <a class="btn status" href="/exercises/view/active">Show Active Exercises</a>
-    <a class="btn status" href="/exercises/view/inactive">Show Inactive Exercises</a>
+    <a class="btn status" href="/exercises/view/active">Show Active</a>
+    <a class="btn status" href="/exercises/view/inactive">Show Inactive</a>
   <% end %>
 </div>
 
